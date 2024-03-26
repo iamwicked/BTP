@@ -1,5 +1,5 @@
-import random
 from collections import defaultdict
+import secrets
 
 class Node:
     def _init_(self, id, group):
@@ -32,10 +32,10 @@ class Jaya:
         self.learning_rate = learning_rate
 
     def fitness(self, node):
-        return random.random() 
+        return secrets.SystemRandom().random() 
 
     def fuzzy_similarity(self, node1, node2):
-        return random.random()  
+        return secrets.SystemRandom().random()  
 
     def optimize(self):
 
@@ -44,7 +44,7 @@ class Jaya:
         for group, proportion in group_proportions.items():
             group_nodes = [node for node in self.network.nodes.values() if node.group == group]
             num_nodes = int(round(proportion * self.budget))
-            population.extend(random.sample(group_nodes, num_nodes))
+            population.extend(secrets.SystemRandom().sample(group_nodes, num_nodes))
 
         fitness_values = {node: self.fitness(node) for node in population}
 
@@ -59,12 +59,12 @@ class Jaya:
                     reward = fitness_values[individual]  # Update based on influence spread
                     # individual.automaton.update(neighbor, reward)
 
-                    if similarity * random.random() > max_similarity:
+                    if similarity * secrets.SystemRandom().random() > max_similarity:
                         target_node = neighbor
-                        max_similarity = similarity * random.random()
+                        max_similarity = similarity * secrets.SystemRandom().random()
 
                 # Jaya update
-                new_position = random.choice(list(self.network.nodes.values()))
+                new_position = secrets.SystemRandom().choice(list(self.network.nodes.values()))
                 new_fitness = self.fitness(new_position)
 
                 if new_fitness > fitness_values[individual]:
